@@ -58,6 +58,7 @@ app.get("/asset/:id", (req, res) => {
 });
 
 app.get("/asset/:id/format/:format", (req,res) => {
+	res.setTimeout(1000 * 60 * 5);
 	if (['webm', 'mp4'].includes(req.params.format)) {
 		console.log("Format found");
 		getDecompressedVideo(req.params.id)
