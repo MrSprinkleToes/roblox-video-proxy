@@ -28,7 +28,7 @@ function getDecompressedVideo(id) {
 				request.get(url, {encoding: null}, (err, _, body) => {
 					if (err) return reject("failed to get video");
 					zlib.gunzip(body, (err, dezip) => {
-						if (err) return reject("gunzip failed"); && console.log(err);
+						if (err) return reject("gunzip failed") && console.log(err);
 						resolve(dezip);
 					});
 				});
