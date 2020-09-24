@@ -71,7 +71,7 @@ app.get("/asset/:id/format/:format", (req,res) => {
 					if (err) return res.status(500).send("failed to write video");
 					hbjs.spawn({ input: `./temp/${fileName}.webm`, output: `./temp/${fileName}.mp4` })
 						.on("error", err => {
-                                                        res.status(500).send("Encoding failed");
+                                                        res.status(500).send("Encoding failed: " + err);
                                                         console.log(err);
                                                         fs.unlink(`./temp/${fileName}.webm`);
                                                 })
