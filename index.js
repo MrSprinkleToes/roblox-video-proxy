@@ -70,10 +70,11 @@ app.get("/asset/:id/format/:format", (req,res) => {
 				fs.writeFile(`./temp/${fileName}.webm`, video, err => {
 					if (err) return res.status(500).send("failed to write video");
 					hbjs.spawn({ input: `./temp/${fileName}.webm`, output: `./temp/${fileName}.mp4` })
-						.on("error", () => {
-							res.status(500).send("Encoding failed");
-							fs.unlink(`./temp/${fileName}.webm`);
-						})
+						.on("error", err => {
+                                                        res.status(500).send("Encoding failed");
+                                                        console.log(err);
+                                                        fs.unlink(`./temp/${fileName}.webm`);
+                                                })
 						.on("end", () => {
 							res.set("Content-Disposition", `attachment; filename=video-${req.params.id}.${req.params.format}`)
 							res.sendFile(__dirname + `/temp/${fileName}.mp4`, err => {
